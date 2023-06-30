@@ -30,7 +30,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -39,7 +41,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.excitedbroltd.meditationappcompose.Feature
 import com.excitedbroltd.meditationappcompose.R
+import com.excitedbroltd.meditationappcompose.ui.drawCurvePath
+import com.excitedbroltd.meditationappcompose.ui.theme.Beige1
+import com.excitedbroltd.meditationappcompose.ui.theme.Beige2
+import com.excitedbroltd.meditationappcompose.ui.theme.Beige3
+import com.excitedbroltd.meditationappcompose.ui.theme.BlueViolet1
+import com.excitedbroltd.meditationappcompose.ui.theme.BlueViolet2
+import com.excitedbroltd.meditationappcompose.ui.theme.BlueViolet3
 import com.excitedbroltd.meditationappcompose.ui.theme.DeepBlue
+import com.excitedbroltd.meditationappcompose.ui.theme.LightGreen1
+import com.excitedbroltd.meditationappcompose.ui.theme.LightGreen2
+import com.excitedbroltd.meditationappcompose.ui.theme.LightGreen3
+import com.excitedbroltd.meditationappcompose.ui.theme.OrangeYellow1
+import com.excitedbroltd.meditationappcompose.ui.theme.OrangeYellow2
+import com.excitedbroltd.meditationappcompose.ui.theme.OrangeYellow3
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
@@ -48,30 +63,30 @@ fun HomeScreen() {
         Feature(
             "Sleep Meditation",
             R.drawable.ic_headphone,
-            Color.LightGray,
-            Color.Gray,
-            Color.Gray
+            BlueViolet1,
+            BlueViolet2,
+            BlueViolet3
         ),
         Feature(
             "Tips for sleeping",
             R.drawable.ic_videocam,
-            Color.LightGray,
-            Color.Gray,
-            Color.Gray
+            LightGreen1,
+            LightGreen2,
+            LightGreen3
         ),
         Feature(
-            "Night island",
+            title = "Night island",
             R.drawable.ic_headphone,
-            Color.LightGray,
-            Color.Gray,
-            Color.Gray
+            OrangeYellow1,
+            OrangeYellow2,
+            OrangeYellow3
         ),
         Feature(
-            "Calming sounds",
+            title = "Calming sounds",
             R.drawable.ic_headphone,
-            Color.LightGray,
-            Color.Gray,
-            Color.Gray
+            Beige1,
+            Beige2,
+            Beige3
         )
     )
     Box(
@@ -202,13 +217,37 @@ fun Features(features: List<Feature>) {
             modifier = Modifier.fillMaxHeight()
         ) {
             items(count = features.size) {
+                val feature = features[it]
                 Box(
                     modifier = Modifier
                         .padding(5.dp)
                         .clip(RoundedCornerShape(10.dp))
                         .height(150.dp)
+                        .background(feature.darkColor)
                         .drawBehind {
-                            drawRect(color = Color.Cyan)
+                            val height = size.height
+                            val width = size.width
+                            val point1 = Offset(0f, height * 0.35f)
+                            val point2 = Offset(x = width * 0.2f, y = height * 0.6f)
+                            val point3 = Offset(x = width * 0.4f, y = height * 0.1f)
+                            val point4 = Offset(x = width * 0.7f, y = height * 0.7f)
+                            val point5 = Offset(x = width, y = 0f)
+                            val point6 = Offset(x = width, y = height)
+                            val point7 = Offset(x = 0f, y = height)
+
+                            val path = Path()
+                                .apply {
+                                    moveTo(point1.x, point2.y)
+                                    drawCurvePath(point1, point2)
+                                    drawCurvePath(point2, point3)
+                                    drawCurvePath(point3, point4)
+                                    drawCurvePath(point4, point5)
+                                }
+                            path.lineTo(point5.x, point5.y)
+                            path.lineTo(point6.x, point6.y)
+                            path.lineTo(point7.x, point7.y)
+                            drawPath(path = path, color = feature.mediumColor)
+
                         }
 
                 ) {
