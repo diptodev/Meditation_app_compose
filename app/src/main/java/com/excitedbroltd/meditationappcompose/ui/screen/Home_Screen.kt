@@ -92,6 +92,34 @@ fun HomeScreen() {
             Beige1,
             Beige2,
             Beige3
+        ),
+        Feature(
+            "Sleep Meditation",
+            R.drawable.ic_headphone,
+            BlueViolet1,
+            BlueViolet2,
+            BlueViolet3
+        ),
+        Feature(
+            "Tips for sleeping",
+            R.drawable.ic_videocam,
+            LightGreen1,
+            LightGreen2,
+            LightGreen3
+        ),
+        Feature(
+            title = "Night island",
+            R.drawable.ic_headphone,
+            OrangeYellow1,
+            OrangeYellow2,
+            OrangeYellow3
+        ),
+        Feature(
+            title = "Calming sounds",
+            R.drawable.ic_headphone,
+            Beige1,
+            Beige2,
+            Beige3
         )
     )
     val menus = listOf(
@@ -229,7 +257,7 @@ fun Features(features: List<Feature>) {
     Column(modifier = Modifier.fillMaxWidth()) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
-            contentPadding = PaddingValues(start = 15.dp, end = 15.dp, bottom = 10.dp),
+            contentPadding = PaddingValues(start = 15.dp, end = 15.dp, bottom = 80.dp),
             modifier = Modifier.fillMaxWidth()
         ) {
             items(count = features.size) {
