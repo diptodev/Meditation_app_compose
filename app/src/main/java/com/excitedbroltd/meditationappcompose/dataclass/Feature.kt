@@ -1,4 +1,4 @@
-package com.excitedbroltd.meditationappcompose
+package com.excitedbroltd.meditationappcompose.dataclass
 
 import androidx.annotation.DrawableRes
 import androidx.compose.ui.graphics.Color

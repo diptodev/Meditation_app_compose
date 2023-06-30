@@ -39,8 +39,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.excitedbroltd.meditationappcompose.Feature
 import com.excitedbroltd.meditationappcompose.R
+import com.excitedbroltd.meditationappcompose.dataclass.BottomMenuItem
+import com.excitedbroltd.meditationappcompose.dataclass.Feature
 import com.excitedbroltd.meditationappcompose.ui.drawCurvePath
 import com.excitedbroltd.meditationappcompose.ui.theme.Beige1
 import com.excitedbroltd.meditationappcompose.ui.theme.Beige2
@@ -93,6 +94,13 @@ fun HomeScreen() {
             Beige3
         )
     )
+    val menus = listOf(
+        BottomMenuItem("Home", R.drawable.ic_home),
+        BottomMenuItem("Meditate", R.drawable.ic_bubble),
+        BottomMenuItem("Sleep", R.drawable.ic_moon),
+        BottomMenuItem("Music", R.drawable.ic_musicplay),
+        BottomMenuItem("Profile", R.drawable.ic_profile)
+    )
     Box(
         modifier = Modifier
             .background(DeepBlue)
@@ -103,7 +111,9 @@ fun HomeScreen() {
             ChipSection()
             CurrentMeditation()
             Features(features = features)
+
         }
+        BottomMenu(menus, modifier = Modifier.align(Alignment.BottomCenter))
     }
 }
 
@@ -219,8 +229,8 @@ fun Features(features: List<Feature>) {
     Column(modifier = Modifier.fillMaxWidth()) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
-            contentPadding = PaddingValues(start = 15.dp, end = 15.dp, bottom = 100.dp),
-            modifier = Modifier.fillMaxHeight()
+            contentPadding = PaddingValues(start = 15.dp, end = 15.dp, bottom = 10.dp),
+            modifier = Modifier.fillMaxWidth()
         ) {
             items(count = features.size) {
                 val feature = features[it]
@@ -315,6 +325,50 @@ fun Features(features: List<Feature>) {
                         }
                     }
 
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun BottomMenu(menus: List<BottomMenuItem>, modifier: Modifier) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(DeepBlue)
+            .fillMaxWidth()
+            .padding(10.dp)
+    ) {
+        LazyRow(
+            modifier = modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+
+            ) {
+            items(menus.size) {
+                val menu = menus[it]
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Box(
+                        modifier = modifier
+                            .clip(RoundedCornerShape(10.dp))
+                            .size(40.dp)
+                            .background(if (it == 0) ButtonBlue else Color.Transparent)
+                            .clickable { },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            painter = painterResource(id = menu.iconId),
+                            contentDescription = menu.title,
+                            tint = Color.LightGray,
+                            modifier = Modifier.size(30.dp)
+                        )
+                    }
+                    Text(text = menu.title, color = TextWhite.copy(alpha = 0.7f))
                 }
             }
         }
