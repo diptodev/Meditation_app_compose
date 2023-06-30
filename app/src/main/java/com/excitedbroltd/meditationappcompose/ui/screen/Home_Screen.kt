@@ -48,13 +48,17 @@ import com.excitedbroltd.meditationappcompose.ui.theme.Beige3
 import com.excitedbroltd.meditationappcompose.ui.theme.BlueViolet1
 import com.excitedbroltd.meditationappcompose.ui.theme.BlueViolet2
 import com.excitedbroltd.meditationappcompose.ui.theme.BlueViolet3
+import com.excitedbroltd.meditationappcompose.ui.theme.ButtonBlue
+import com.excitedbroltd.meditationappcompose.ui.theme.DarkerButtonBlue
 import com.excitedbroltd.meditationappcompose.ui.theme.DeepBlue
 import com.excitedbroltd.meditationappcompose.ui.theme.LightGreen1
 import com.excitedbroltd.meditationappcompose.ui.theme.LightGreen2
 import com.excitedbroltd.meditationappcompose.ui.theme.LightGreen3
+import com.excitedbroltd.meditationappcompose.ui.theme.LightRed
 import com.excitedbroltd.meditationappcompose.ui.theme.OrangeYellow1
 import com.excitedbroltd.meditationappcompose.ui.theme.OrangeYellow2
 import com.excitedbroltd.meditationappcompose.ui.theme.OrangeYellow3
+import com.excitedbroltd.meditationappcompose.ui.theme.TextWhite
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
@@ -119,13 +123,13 @@ fun Headings() {
                     fontStyle = FontStyle.Normal,
                     fontWeight = FontWeight.Bold,
                     fontSize = 22.sp,
-                    color = Color.White
+                    color = TextWhite
                 )
                 Text(
                     text = "We wish you have a good day!",
                     fontWeight = FontWeight.Light,
                     fontSize = 15.sp,
-                    color = Color.White.copy(alpha = 0.7f)
+                    color = TextWhite.copy(alpha = 0.7f)
                 )
             }
             Icon(
@@ -156,11 +160,11 @@ fun ChipSection() {
                     .clickable {
                         selectedChip = it
                     }
-                    .background(if (selectedChip == it) Color.Green else Color.LightGray)
+                    .background(if (selectedChip == it) ButtonBlue else DarkerButtonBlue)
                     .padding(15.dp),
 
                 ) {
-                Text(text = "${chips[it]}")
+                Text(text = "${chips[it]}", color = TextWhite)
             }
         }
     }
@@ -173,7 +177,7 @@ fun CurrentMeditation() {
             .fillMaxWidth()
             .padding(15.dp)
             .clip(RoundedCornerShape(10.dp))
-            .background(Color.Blue)
+            .background(LightRed)
             .padding(horizontal = 15.dp, vertical = 20.dp)
     ) {
         Row(
@@ -181,27 +185,29 @@ fun CurrentMeditation() {
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Column() {
+            Column(verticalArrangement = Arrangement.SpaceBetween) {
                 Text(
                     text = "Daily Thought",
-                    color = Color.White,
+                    color = TextWhite,
                     style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(bottom = 6.dp)
                 )
-                Text(text = "Meditation 3-10 min", color = Color.White.copy(alpha = 0.8f))
+                Text(text = "Meditation 3-10 min", color = TextWhite.copy(alpha = 0.8f))
             }
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
                     .size(40.dp)
                     .clip(CircleShape)
-                    .background(Color.Green)
+                    .background(ButtonBlue)
                     .padding(10.dp)
             ) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_play),
                     contentDescription = "Icon Play",
-                    tint = Color.White
+                    tint = Color.White,
+                    modifier = Modifier.size(13.dp)
                 )
             }
         }
@@ -227,13 +233,21 @@ fun Features(features: List<Feature>) {
                         .drawBehind {
                             val height = size.height
                             val width = size.width
-                            val point1 = Offset(0f, height * 0.35f)
+                            val point1 = Offset(0f, height * 0.15f)
                             val point2 = Offset(x = width * 0.2f, y = height * 0.6f)
                             val point3 = Offset(x = width * 0.4f, y = height * 0.1f)
                             val point4 = Offset(x = width * 0.7f, y = height * 0.7f)
                             val point5 = Offset(x = width, y = 0f)
                             val point6 = Offset(x = width, y = height)
                             val point7 = Offset(x = 0f, y = height)
+
+                            val mpoint1 = Offset(0f, height * 0.25f)
+                            val mpoint2 = Offset(x = width * 0.15f, y = height * 0.8f)
+                            val mpoint3 = Offset(x = width * 0.4f, y = height * 0.4f)
+                            val mpoint4 = Offset(x = width * 0.8f, y = height * 0.8f)
+                            val mpoint5 = Offset(x = width, y = height * 0.2f)
+                            val mpoint6 = Offset(x = width, y = height)
+                            val mpoint7 = Offset(x = 0f, y = height)
 
                             val path = Path()
                                 .apply {
@@ -248,6 +262,19 @@ fun Features(features: List<Feature>) {
                             path.lineTo(point7.x, point7.y)
                             drawPath(path = path, color = feature.mediumColor)
 
+                            val mpath = Path()
+                                .apply {
+                                    moveTo(mpoint1.x, mpoint2.y)
+                                    drawCurvePath(mpoint1, mpoint2)
+                                    drawCurvePath(mpoint2, mpoint3)
+                                    drawCurvePath(mpoint3, mpoint4)
+                                    drawCurvePath(mpoint4, mpoint5)
+                                }
+                            mpath.lineTo(mpoint5.x, mpoint5.y)
+                            mpath.lineTo(mpoint6.x, mpoint6.y)
+                            mpath.lineTo(mpoint7.x, mpoint7.y)
+                            drawPath(path = mpath, color = feature.lightColor)
+
                         }
 
                 ) {
@@ -259,7 +286,7 @@ fun Features(features: List<Feature>) {
                     ) {
                         val feature = features[it]
                         Text(
-                            text = feature.title, color = Color.White,
+                            text = feature.title, color = TextWhite,
                             modifier = Modifier.padding(1.dp),
                             style = MaterialTheme.typography.titleLarge,
                             fontWeight = FontWeight.Bold
@@ -278,12 +305,12 @@ fun Features(features: List<Feature>) {
                             )
                             Box(
                                 modifier = Modifier
-                                    .clip(RoundedCornerShape(10.dp))
-                                    .background(DeepBlue)
+                                    .clip(RoundedCornerShape(15.dp))
+                                    .background(ButtonBlue)
                                     .padding(10.dp),
                                 contentAlignment = Alignment.Center
                             ) {
-                                Text(text = "Start", color = Color.White)
+                                Text(text = "Start", color = TextWhite)
                             }
                         }
                     }
